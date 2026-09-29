@@ -1,0 +1,42 @@
+{% extends "pages/base.html" %}
+
+{% block title %}Sales{% endblock %}
+
+{% block content %}
+<h1>Sales</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Piece</th>
+            <th>Buyer</th>
+            <th>Contact</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sale in sales %}
+        <tr>
+            <td>
+                {% if sale.piece.image %}
+                    <img src="{{ sale.piece.image.url }}" alt="{{ sale.piece.title }}" style="max-width: 80px;">
+                {% endif %}
+            </td>
+            <td>{{ sale.piece.title }}</td>
+            <td>{{ sale.buyer_name }}</td>
+            <td>{{ sale.buyer_contact }}</td>
+            <td>${{ sale.amount }}</td>
+            <td>{{ sale.get_sale_type_display }}</td>
+            <td>{{ sale.sale_date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No sales recorded yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

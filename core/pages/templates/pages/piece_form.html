@@ -1,0 +1,30 @@
+{% extends "pages/base.html" %}
+
+{% block title %}Upload Piece{% endblock %}
+
+{% block content %}
+<h1>Upload New Piece</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="content">Description:</label>
+    <textarea id="content" name="content" required></textarea>
+
+    <label for="price">Price (leave blank for originals):</label>
+    <input type="number" id="price" name="price" step="0.01">
+
+    <label for="image">Image:</label>
+    <input type="file" id="image" name="image">
+
+    <div class="checkbox-field"> {# Added a checkbox for marking the piece as original #}
+        <input type="checkbox" id="is_original" name="is_original">
+        <label for="is_original">This is an original (not for direct sale)</label>
+    </div>
+
+    <button type="submit">Upload Piece</button>
+</form>
+{% endblock %}

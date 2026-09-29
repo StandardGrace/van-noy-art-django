@@ -1,0 +1,47 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block content %}
+<h1>Gallery</h1>
+
+<div class="gallery">
+    {% for piece in pieces %}
+        <div class="piece-card"
+             data-title="{{ piece.title }}"
+             data-content="{{ piece.content }}"
+             data-author="{{ piece.author }}"
+             data-price="{% if piece.is_original %}Original — contact for details{% else %}${{ piece.price }}{% endif %}"
+             {% if piece.image %}data-image="{{ piece.image.url }}"{% endif %}>
+            {% if piece.image %}
+                <img src="{{ piece.image.url }}" alt="{{ piece.title }}">
+            {% endif %}
+            <h2>{{ piece.title }}</h2>
+            <p>{{ piece.content }}</p>
+            <p>By {{ piece.author }}</p>
+            <p class="piece-date">Added {{ piece.created_at|date:"F j, Y" }}</p>
+            {% if piece.is_original %}
+                <p><strong>Original — contact for details</strong></p>
+            {% else %}
+                <p>${{ piece.price }}</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No pieces are available yet.</p>
+    {% endfor %}
+</div>
+
+{# Shared expanded-view overlay - one element, refilled via JS with whichever card was clicked #}
+<div id="piece-modal-backdrop" class="modal-backdrop">
+    <div class="modal-content">
+        <img id="piece-modal-image" src="" alt="">
+        <h2 id="piece-modal-title"></h2>
+        <p id="piece-modal-content"></p>
+        <p id="piece-modal-author"></p>
+        <p id="piece-modal-price"></p>
+    </div>
+</div>
+
+<script src="{% static 'pages/gallery.js' %}"></script>
+{% endblock %}

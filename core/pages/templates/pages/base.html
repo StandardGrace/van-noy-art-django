@@ -1,0 +1,65 @@
+{% load static %} <!-- Load the CSS, must be first lines in file -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Van Noys Visuals{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Semi+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <div class="header-bar">
+            <h1>Van Noys Visuals</h1>
+            <button id="nav-toggle" class="nav-toggle" type="button"
+                    aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">☰</button>
+        </div>
+        {% if user.is_authenticated %}
+            <p class="user-status">Welcome, {{ user.username }}</p>
+        {% endif %}
+        <nav id="site-nav">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'contact' %}">Contact Us</a>
+            <a href="{% url 'product_list' %}">Products</a>
+            <a href="{% url 'gallery' %}">Gallery</a>
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <a href="{% url 'upload_piece' %}">Upload Piece</a>
+                {% endif %}
+                {% if perms.pages.view_sale %}
+                    <a href="{% url 'sales' %}">Sales</a>
+                {% endif %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'register' %}">Register</a>
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+<main> 
+    {# Displays messages/errors triggered by login failures or other system actions #}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</main>
+
+    <footer>
+        <p>&copy; 2026 Van Noys Visuals</p>
+    </footer>
+
+    <script src="{% static 'pages/nav.js' %}"></script>
+</body>
+</html>

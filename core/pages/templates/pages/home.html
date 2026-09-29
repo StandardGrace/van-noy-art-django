@@ -1,0 +1,18 @@
+{% extends "pages/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h2>Welcome to Van Noys Visuals</h2>
+    <p>The dark, the macabre, and the fantastic — brought to life by Jake Van Noys. Browse the <a href="{% url 'gallery' %}">gallery</a> to see current work, or get in touch about a print, license, or original.</p>
+
+    {% if latest_piece %}
+        <div class="hero-piece">
+            <h3>Latest Piece: {{ latest_piece.title }}</h3>
+            {% if latest_piece.image %}
+                <img src="{{ latest_piece.image.url }}" alt="{{ latest_piece.title }}">
+            {% endif %}
+            <p class="hero-caption">{{ latest_piece.content }}</p>
+        </div>
+    {% endif %}
+{% endblock %}
