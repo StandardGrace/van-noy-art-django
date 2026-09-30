@@ -96,4 +96,4 @@ Features
 
 Author
 ======
-Patrick Grace
+Patrick Grace — [patrickmgrace.com](https://www.patrickmgrace.com/) — GitHub: [StandardGrace](https://github.com/StandardGrace)
